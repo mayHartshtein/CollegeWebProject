@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>College of Management</h1>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div><h3><b>Welcome to College of Management</b></h3></div>
+        <p>
+            <h4>
+                Come and enjoy the success!!
+                <br />Just choose - Law, Economics or Management...
+                <br /><br>We will be glad to hear from you,
+                <br />for more details click on the "contact" tab.
+                <br /><br />Good Luck!
+
+            </h4>
+        </p>
+    </div>
+
+    <div class="col-md-4" align="center">
+        <div><h3><b>Story of the Month!</b></h3></div>
+        <img src="~/Images/delegation.jpg" width="35%" height="35%">
+
+        <br /><br />
+        <p><a class="btn btn-default" href="https://www.colman.ac.il/node/6013"><b>Click For Details</b> &raquo;</a></p>
+    </div>
+
+
+
+    <div class="col-md-4">
+        <div><h3><b>Come and Join Us!</b></h3></div>
+        <p><h4>Let the fun begin...</h4></p>
+        <img id="img" src="~/Images/icon.png" style="display: none;">
+
+        <div style="float: right;">
+            <canvas id="myCanvas" width="385" height="490" style="border:1px solid #d3d3d3;"></canvas>
+        </div>
+
+        <script>
+            window.onload = function () {
+                var c = document.getElementById("myCanvas");
+                var ctx = c.getContext("2d");
+                var img = document.getElementById("img");
+                ctx.drawImage(img, 10, 10);
+            }
+        </script>
+    </div>
+</div>

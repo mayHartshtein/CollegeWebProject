@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Contact";
+}
+
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<style>
+    .contact {
+        -webkit-column-count: 2; /* Chrome, Safari, Opera */
+        -moz-column-count: 2; /* Firefox */
+        column-count: 2;
+    }
+</style>
+
+<div class="contact">
+        <h4>Address: Elie Wiesel St 2, Rishon LeTsiyon.</h4>
+        <br />
+        <h4>Phone: *5025</h4>
+        <br />
+        <h4>Mail: colman@gmail.com</h4>
+        <br />
+        <h4>Sunday-Thursday: 09:00-21:00</h4>
+        <br />
+        <h4>Friday: 09:00-15:00</h4>
+        <br />
+</div>
+
+<br /><br />
+<script>
+    $(document).ready(function () {
+        $.simpleWeather({
+            location: 'Tel Aviv, IL',
+            woeid: '',
+            unit: 'c',
+            success: function (weather) {
+                html = '<h3 style="text-shadow: 2px 2px #ff0000;">' + weather.temp + '&deg;' + weather.units.temp + '</h3>';
+
+                $("#weather").html(html);
+            },
+            error: function (error) {
+                $("#weather").html('<p>' + error + '</p>');
+            }
+        });
+    });
+</script>
+
+<div id="googleMap" align="center"></div>
+
+<div>
+    <h2>The current temperature in the college:</h2>
+    <div id="weather"></div>
+</div>
+

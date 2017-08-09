@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Statistics";
+}
+
+<div align="center">
+    <h4><b>How many staff persons there are in each course?</b></h4>
+    <style>
+        /* set the CSS */
+
+        body {
+            font: 12px Arial;
+            text-align: center;
+        }
+
+        path {
+            stroke: steelblue;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: grey;
+            stroke-width: 1;
+            shape-rendering: crispEdges;
+        }
+
+        .bar {
+            fill: lightblue;
+        }
+    </style>
+    <div id="canvas-svg"></div>
+    <script>
+        $.ajax({
+            url: '/Home/StaffGraph',
+            dataType: 'json',
+            success: function (data) {
+                // Set the dimensions of the canvas / graph
+                var margin = { top: 30, right: 20, bottom: 30, left: 50 },
+                    width = 600 - margin.left - margin.right,
+                    height = 270 - margin.top - margin.bottom;
+
+                // Set the ranges
+                var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.1);;
+                var y = d3.scale.linear().range([height, 0]);
+
+                // Define the axes
+                var xAxis = d3.svg.axis().scale(x).orient("bottom");
+
+                var yAxis = d3.svg.axis().scale(y).orient("left").ticks(5);
+
+                // Adds the svg canvas
+                var svg = d3.select("#canvas-svg")
+                    .append("svg")
+                        .attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                        .attr("transform",
+                              "translate(" + margin.left + "," + margin.top + ")");
+
+                // Scale the range of the data
+                x.domain(data.map(function (d) { return d.Filter; }));
+                y.domain([0, d3.max(data, function (d) { return d.Amount; })]);
+
+                data.forEach(function (d) {
+                    d.Amount = +d.Amount;
+                });
+
+                // Add the X Axis
+                svg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis);
+
+                // Add the Y Axis
+                svg.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis);
+
+                svg.selectAll("bar")
+                    .data(data)
+                  .enter().append("rect")
+                    .style("fill", "steelblue")
+                    .attr("x", function (d) { return x(d.Filter); })
+                    .attr("width", x.rangeBand())
+                    .attr("y", function (d) { return y(d.Amount); })
+                    .attr("height", function (d) { return height - y(d.Amount); });
+
+                svg.selectAll(".label")
+                    .data(data)
+                    .enter().append("svg:text")
+                    .attr("class", "label")
+                    .attr("x", function (d) {
+                        return x(d.Filter) + x.rangeBand() / 3;
+                    })
+                    .attr("y", function (d) {
+                        return y(d.Amount) - 5;
+                    })
+                    .text(function (d) {
+                        return d.Amount;
+                    });
+            }
+        });
+  
+    </script>
+</div>

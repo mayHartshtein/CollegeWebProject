@@ -1,0 +1,79 @@
+﻿@model IEnumerable<CollegeProject.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@if (User.Identity.Name.Equals("admin@gmail.com"))
+{
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+}
+
+<div class="container">
+    <div class="col-md-4 col-sm-6">
+        <div class="service-wrapper">
+            @using (Html.BeginForm())
+            {
+                <p>
+                    <h4>Search course by </h4><br />
+                    <div>
+                        Title:<br /> @Html.TextBox("Title")
+                        <input type="submit" value="search" class="btn btn-default" />
+                    </div>
+                    <div>
+                        Description:<br /> @Html.TextBox("Description")
+                        <input type="submit" value="search" class="btn btn-default" />
+                    </div>
+                    <div>
+                        FacultyName:<br /> @Html.TextBox("FacultyName")
+                        <input type="submit" value="search" class="btn btn-default" />
+                    </div>
+                </p>
+            }
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Faculty.FacultyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Credits)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Faculty.FacultyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Credits)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CourseID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CourseID })
+        </td>
+    </tr>
+}
+
+</table>

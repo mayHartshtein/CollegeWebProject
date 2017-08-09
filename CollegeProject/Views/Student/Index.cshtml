@@ -1,0 +1,79 @@
+﻿@model IEnumerable<CollegeProject.Models.Student>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@if (User.Identity.Name.Equals("admin@gmail.com"))
+{
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+}
+<div class="container">
+    <div class="col-md-4 col-sm-6">
+        <div class="service-wrapper">
+            @using (Html.BeginForm())
+            {
+                <p>
+                    <h4>Search student by </h4><br />
+                    <div>
+                        First Name:<br /> @Html.TextBox("FirstName")
+                        <input type="submit" value="search" class="btn btn-default" />
+                    </div>
+                   <div>
+                       Last Name:<br /> @Html.TextBox("LastName")
+                       <input type="submit" value="search" class="btn btn-default" />
+                   </div>
+                   <div>
+                       Address:<br /> @Html.TextBox("Address")
+                       <input type="submit" value="search" class="btn btn-default" />
+                   </div>
+                </p>
+            }
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.StudentID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.StudentID })
+        </td>
+    </tr>
+}
+
+</table>
